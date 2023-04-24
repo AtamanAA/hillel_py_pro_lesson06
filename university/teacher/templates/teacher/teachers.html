@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Teachers</title>
+</head>
+<body>
+    <div style="margin: 32px">
+        <h1>Teachers list</h1>
+
+        <table style="border: 2px solid black; border-collapse: collapse;">
+            <tr>
+                <th style="border: 1px solid black;">ID</th>
+                <th style="border: 1px solid black;">First name</th>
+                <th style="border: 1px solid black;">Last name</th>
+                <th style="border: 1px solid black;">Birthday</th>
+            </tr>
+            {% for teacher in teachers_list %}
+                <tr style="border: 1px solid black;">
+                    <td style="border: 1px solid black;">{{ teacher.id }}</td>
+                    <td style="border: 1px solid black;">{{ teacher.first_name }}</td>
+                    <td style="border: 1px solid black;">{{ teacher.last_name }}</td>
+                    <td style="border: 1px solid black;">{{ teacher.birthday }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+</body>
+</html>

@@ -1,27 +1,27 @@
 from django.http import HttpResponse
+from django.shortcuts import render
 from django.utils.datastructures import MultiValueDictKeyError
 from faker import Faker
 
 from .models import Teacher
 
 
-def index(request):
-    return HttpResponse("There is a teacher page!")
-
-
 def teachers(request):
-    return HttpResponse("There is a teacher's list")
+    teachers_list = list(Teacher.objects.values())
+    return render(request, "teacher/teachers.html", {'teachers_list': teachers_list})
 
 
 def generate_teachers(request):
     try:
-        if request.GET["count"].isdigit() and 0 < int(request.GET["count"]) <= 100:
-            count = int(request.GET["count"])
-        else:
-            count = request.GET["count"]
-            return HttpResponse(f"Count {count} is not valid! Try again")
+        count = request.GET["count"]
     except MultiValueDictKeyError:
-        count = 100
+        return HttpResponse('Query parameter "count" did not find! Try again')
+    if not (count.isdigit() and 0 < int(request.GET["count"]) <= 100):
+        return HttpResponse(f"Count {count} is not valid! Try again")
+    try:
+        count = int(count)
+    except ValueError:
+        return HttpResponse(f"Count {count} is not an integer! Try again")
 
     fake = Faker()
     teachers_list = []
@@ -35,7 +35,3 @@ def generate_teachers(request):
         )
     teachers = Teacher.objects.bulk_create(teachers_list)
     return HttpResponse(f"Generate {count} fake teachers: <p>{teachers}</p>")
-
-
-
-
