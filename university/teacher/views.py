@@ -8,7 +8,7 @@ from .models import Teacher
 
 def teachers(request):
     teachers_list = list(Teacher.objects.values())
-    return render(request, "teacher/teachers.html", {'teachers_list': teachers_list})
+    return render(request, "teacher/teachers.html", {"teachers_list": teachers_list})
 
 
 def generate_teachers(request):
