@@ -6,6 +6,10 @@ from faker import Faker
 from .models import Teacher
 
 
+def index(request):
+    return render(request, "teacher/index.html")
+
+
 def teachers(request):
     teachers_list = list(Teacher.objects.values())
     return render(request, "teacher/teachers.html", {"teachers_list": teachers_list})
